@@ -1,6 +1,7 @@
 var miControlador = miModulo.controller(
     "postPlistController",
-    ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
+    ['$scope', '$http', '$routeParams','$window', function ($scope, $http, $routeParams, $window) {
+        $scope.sitio='plist';
         $scope.paginaActual = parseInt($routeParams.page);
         $scope.rppActual = parseInt($routeParams.rpp);
         $scope.rppS = [10,50,100];
@@ -29,8 +30,14 @@ var miControlador = miModulo.controller(
                 $scope.calcPage.push(Math.round(res * next));
             }
             paginacion(2);
+            if($scope.paginaActual >$scope.numPaginas){
+                $window.location.href=`#!/post/plist/${$scope.rppActual}/${$scope.numPaginas}`;
+            } else if($scope.paginaActual<1){
+                $window.location.href=`#!/post/plist/${$scope.rppActual}/1`;
+            }
         }, function () {
         })
+        
 
         function paginacion(vecindad) {
             vecindad++;
