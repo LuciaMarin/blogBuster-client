@@ -5,6 +5,7 @@ var miControlador = miModulo.controller(
         $scope.paginaActual = parseInt($routeParams.page);
         $scope.rppActual = parseInt($routeParams.rpp);
         $scope.rppS = [10,50,100];
+        $scope.controller = "postPlistController";
 
 
         $http({

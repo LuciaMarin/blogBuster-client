@@ -1,23 +1,12 @@
 var miControlador = miModulo.controller(
-    "postEditController",
-    ['$scope', '$http', '$routeParams', '$window', '$location', 'promesasService',
-        function ($scope, $http, $routeParams, $window, $location, promesasService) {
+    "postNewController",
+    ['$scope', '$http', '$routeParams', '$window', 'promesasService',
+        function ($scope, $http, $routeParams, $window, promesasService) {
             $scope.id = $routeParams.id;
-            $scope.controller = "postEditController";
+            $scope.controller = "postNewController";
             $scope.fallo = false;
             $scope.hecho = false;
             $scope.falloMensaje = "";
-
-            promesasService.ajaxGet('post', $scope.id)
-                .then(function (response) {
-                    $scope.id = response.data.message.id;
-                    $scope.titulo = response.data.message.titulo;
-                    $scope.cuerpo = response.data.message.cuerpo;
-                    $scope.etiquetas = response.data.message.etiquetas;
-                    $scope.fecha = response.data.message.fecha;
-                }, function (error) {
-                    $scope.fallo = true;
-                });
 
             $scope.modificar = function () {
                 const datos = {
@@ -31,13 +20,13 @@ var miControlador = miModulo.controller(
                     data: JSON.stringify(datos)
                 };
                 $http.defaults.headers.put['Content-Type'] = 'application/json;charset=utf-8';
-                $http.get('http://localhost:8081/blogbuster/json?ob=post&op=update', {
+                $http.get('http://localhost:8081/blogbuster/json?ob=post&op=new', {
                     params: jsonToSend
                 })
                     .then(function (response) {
                         if (response.data.status != 200) {
                             $scope.fallo = true;
-                            $scope.falloMensaje = response.data.message;
+                            $scope.falloMensaje = response.data.response;
                         } else {
                             $scope.fallo = false;
                         }
